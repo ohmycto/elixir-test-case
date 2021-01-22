@@ -11,6 +11,9 @@ config :geo_tasks,
   ecto_repos: [GeoTasks.Repo],
   generators: [binary_id: true]
 
+config :geo_tasks, GeoTasks.Repo,
+  migration_primary_key: [name: :id, type: :binary_id]
+
 # Configures the endpoint
 config :geo_tasks, GeoTasksWeb.Endpoint,
   url: [host: "localhost"],
