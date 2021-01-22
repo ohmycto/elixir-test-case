@@ -5,7 +5,7 @@ defmodule GeoTasks.User do
   schema "users" do
     field :name, :string
     field :role, Ecto.Enum, values: [:manager, :driver]
-    has_many :auth_tokens, GeoTasks.AuthToken
+    has_many :auth_tokens, GeoTasks.UserToken
 
     timestamps()
   end
