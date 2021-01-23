@@ -24,6 +24,7 @@ defmodule GeoTasks.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       import GeoTasks.DataCase
+      import GeoTasks.Factory
     end
   end
 

@@ -1,8 +1,7 @@
 defmodule GeoTasks.UserToken do
   use GeoTasks.Schema
   alias GeoTasks.UserToken
-
-  @token_length 32
+  alias GeoTasks.Auth.Token
 
   schema "user_tokens" do
     field :token, :string
@@ -27,11 +26,10 @@ defmodule GeoTasks.UserToken do
   end
 
   defp generate_token(changeset) do
-    new_token = @token_length |> :crypto.strong_rand_bytes() |> Base.url_encode64 |> binary_part(0, @token_length)
-    changeset |> put_change(:token, new_token)
+    changeset |> put_change(:token, Token.generate())
   end
 
   defp set_revoked_at(changeset) do
-    changeset |> put_change(:revoked_at, DateTime.utc_now())
+    changeset |> put_change(:revoked_at, DateTime.utc_now() |> DateTime.truncate(:second))
   end
 end
