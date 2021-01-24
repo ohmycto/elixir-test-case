@@ -29,3 +29,6 @@ geo_tasks-*.tar
 
 # Local dev with Docker Compose
 volumes/*
+
+# MacOS
+.DS_Store
