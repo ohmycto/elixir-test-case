@@ -12,7 +12,8 @@ config :geo_tasks,
   generators: [binary_id: true]
 
 config :geo_tasks, GeoTasks.Repo,
-  migration_primary_key: [name: :id, type: :binary_id]
+  migration_primary_key: [name: :id, type: :binary_id],
+  types: GeoTasks.PostgrexTypes
 
 # Configures the endpoint
 config :geo_tasks, GeoTasksWeb.Endpoint,
@@ -27,8 +28,9 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
-# Use Jason for JSON parsing in Phoenix
+# Use Jason for JSON parsing in Phoenix and PostGIS
 config :phoenix, :json_library, Jason
+config :geo_postgis, json_library: Jason
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
