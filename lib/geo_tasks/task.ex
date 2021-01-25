@@ -8,6 +8,7 @@ defmodule GeoTasks.Task do
     field :state, :string, default: "new"
     field :pickup_point, Geo.PostGIS.Geometry
     field :delivery_point, Geo.PostGIS.Geometry
+    field :pickup_point_distance, :float, virtual: true
     belongs_to :manager, User, foreign_key: :manager_id
     belongs_to :driver, User, foreign_key: :driver_id
 
