@@ -2,6 +2,9 @@ defmodule GeoTasks.Task do
   use GeoTasks.Schema
   alias GeoTasks.{Task, User}
 
+  @derive {Jason.Encoder, only: [:id, :title, :description, :state, :pickup_point,
+                                 :delivery_point, :pickup_point_distance]}
+
   schema "tasks" do
     field :title, :string
     field :description, :string
