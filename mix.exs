@@ -52,6 +52,7 @@ defmodule GeoTasks.MixProject do
       {:json_xema, "~> 0.4"},
       {:plug_cowboy, "~> 2.0"},
       {:machinery, "~> 1.0.0"},
+      {:scribe, "~> 0.10"},
       # tests:
       {:mock, "~> 0.3", only: :test},
       {:ex_machina, "~> 2.5.0", only: :test},
