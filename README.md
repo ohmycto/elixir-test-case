@@ -1,4 +1,4 @@
-# Test Case
+# Test Case Description
 
 (originally from https://github.com/netronixgroup/backend-task)
 
@@ -33,3 +33,61 @@ Each task can be in 3 states:
 1. The driver gets the list of the nearest tasks by submitting current location [lat, long]
 1. Driver picks one task from the list (the task becomes assigned)
 1. Driver finishes the task (becomes done)
+
+# Running tests
+
+```sh
+$ mix coveralls
+```
+
+# Start API server locally
+
+```sh
+$ docker-compose up
+```
+
+Test if everything is ready-to-go: http://localhost:4000/dashboard/home
+
+# Test queries
+
+1. Create some Users:
+```sh
+$ docker-compose exec api mix run priv/repo/seeds.exs
+```
+
+You'll get a table of greated users with their tokens.
+
+2. Test queries
+
+Replace `<MANAGER_TOKEN>` and `<DRIVER_TOKEN>` with corresponding tokens from the table above.
+
+Manager creates a new Task:
+```sh
+$ curl --header "Content-Type: application/json" \
+--header "authorization: Bearer <MANAGER_TOKEN>" \
+--request POST \
+--data '{"task":{"title":"My Super Task","description":"My Super Task Description","pickup_point":{"lat":40.7517,"lng":-73.9755},"delivery_point":{"lat":40.7736,"lng":-73.9836}}}' \
+http://localhost:4000/api/v1/tasks
+```
+
+Driver gets a list of Tasks:
+```sh
+$ curl --header "authorization: Bearer <DRIVER_TOKEN>" \
+http://localhost:4000/api/v1/tasks/?lat=40.7517&lng=-73.9755
+```
+
+Driver picks a Task:
+```sh
+$ curl --header "Content-Type: application/json" \
+--header "authorization: Bearer <DRIVER_TOKEN>" \
+--request PUT \
+http://localhost:4000/api/v1/tasks/<TASK_ID>/pick
+```
+
+Driver finishes a Task:
+```sh
+$ curl --header "Content-Type: application/json" \
+--header "authorization: Bearer <DRIVER_TOKEN>" \
+--request PUT \
+http://localhost:4000/api/v1/tasks/<TASK_ID>/finish
+```
