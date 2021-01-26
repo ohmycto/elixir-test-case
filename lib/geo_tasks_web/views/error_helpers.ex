@@ -3,6 +3,21 @@ defmodule GeoTasksWeb.ErrorHelpers do
   Conveniences for translating and building error messages.
   """
 
+  def get_result_errors(%Ecto.Changeset{} = changeset) do
+    Ecto.Changeset.traverse_errors(changeset, fn {msg, _} -> msg end)
+    |> Enum.flat_map(fn({key, messages}) -> Enum.map(messages, &("#{key} #{&1}")) end)
+  end
+  def get_result_errors(%JsonXema.ValidationError{reason: %{required: required_fields}}) do
+    required_fields |> Enum.map(fn(f) -> "#{f} is missing" end)
+  end
+  def get_result_errors(%JsonXema.ValidationError{reason: %{properties: invalid_fields}}) do
+    fields_str = invalid_fields |> Map.keys() |> Enum.join(", ")
+    "The following attributes does not correspond to Task schema: #{fields_str}" |> List.wrap()
+  end
+  def get_result_errors(error) when is_binary(error) do
+    List.wrap(error)
+  end
+
   @doc """
   Translates an error message using gettext.
   """

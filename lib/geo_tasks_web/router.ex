@@ -3,10 +3,16 @@ defmodule GeoTasksWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug GeoTasksWeb.Plugs.AuthPlug
   end
 
-  scope "/api", GeoTasksWeb do
+  scope "/api/v1", GeoTasksWeb, as: :api_v1 do
     pipe_through :api
+
+    resources "/tasks", TaskController, only: [:index, :create] do
+      put "/pick", TaskController, :pick, as: :pick
+      put "/finish", TaskController, :finish, as: :finish
+    end
   end
 
   # Enables LiveDashboard only for development
