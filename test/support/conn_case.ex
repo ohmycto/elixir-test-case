@@ -23,6 +23,8 @@ defmodule GeoTasksWeb.ConnCase do
       import Plug.Conn
       import Phoenix.ConnTest
       import GeoTasksWeb.ConnCase
+      import GeoTasks.Factory
+      import GeoTasks.Factory.Helpers
 
       alias GeoTasksWeb.Router.Helpers, as: Routes
 
